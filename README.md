@@ -120,25 +120,25 @@ In this repository, we present a structured and thoughtful approach to data prep
     <td align="center">
       <a href="https://github.com/basharulalammazu">
         <img src="https://avatars.githubusercontent.com/basharulalammazu" width="100px;" alt=""/>
-        <br /><sub><b>Basharul - Alam - Mazu</b></sub>
+        <br/><b>Basharul - Alam - Mazu</b>
       </a>
     </td>
      <td align="center">
       <a href="https://github.com/mdtanjimrahman">
         <img src="https://avatars.githubusercontent.com/mdtanjimrahman" width="100px;" alt=""/>
-        <br /><sub><b>Md Tanjim Rahman</b></sub>
+        <br/><b>Md Tanjim Rahman</b>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/shanzidazaman">
         <img src="https://avatars.githubusercontent.com/shanzidazaman" width="100px;" alt=""/>
-        <br /><sub><b>Shanzida Zaman Shimu</b></sub>
+        <br/><b>Shanzida Zaman Shimu</b>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/preronasarkarkotha">
         <img src="https://avatars.githubusercontent.com/preronasarkarkotha" width="100px;" alt=""/>
-        <br /><sub><b>Prerona Sarkar</b></sub>
+        <br/><b>Prerona Sarkar</b>
       </a>
     </td>
   </tr>
