@@ -77,11 +77,7 @@ missing_barplot <- function() {
 missing_barplot()
 
 
-
-
-
-
-
+head(dataset)
 
 # Outliers
 detect_outliers <- function(column_name) {
@@ -149,6 +145,8 @@ dataset <- impute_mean("BloodPressure")
 dataset <- discard_na("Heart_Rate")
 
 
+dim(dataset)
+
 sum(is.na(dataset))
 
 unique_values <- unique(dataset$HeartDisease)
@@ -210,11 +208,11 @@ head(dataset)
 
 # Split Dataset
 set.seed(123)
-n <- nrow(data)
+n <- nrow(dataset)
 train_data <- sample(1:n, 0.7 * n)
 
-train <- data[train_data, ]
-test <- data[-train_data, ]
+train <- dataset[train_data, ]
+test <- dataset[-train_data, ]
 
 
 dim(train)
@@ -232,7 +230,6 @@ dataset %>%
     Median_Age = median(Age),
     Mode_Age = as.numeric(names(sort(table(Age), decreasing = TRUE)[1]))
   )
-
 
 
 # Central Tendencies of Age by Heart_Rate
