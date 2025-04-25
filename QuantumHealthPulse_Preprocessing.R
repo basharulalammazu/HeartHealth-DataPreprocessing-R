@@ -52,6 +52,15 @@ names(dataset)[potential_numeric]
 
 
 
+invalid_bp <- !suppressWarnings(!is.na(as.numeric(as.character(dataset$BloodPressure))))
+invalid_entries <- dataset$BloodPressure[invalid_bp]
+
+unique(invalid_entries)
+
+sum(invalid_bp)
+
+
+
 dataset$BloodPressure <- as.numeric(dataset$BloodPressure)
 dataset$Heart_Rate[dataset$Heart_Rate == "Low"] <- 0
 dataset$Heart_Rate[dataset$Heart_Rate == "High"] <- 1
@@ -193,32 +202,32 @@ table(balanced_dataset$HeartDisease)
 
 #  Normalize a Continuous Attribute
 # AGE
-dataset <- dataset %>%
+balanced_dataset <- balanced_dataset %>%
   mutate(Normalized_Age = (Age - min(Age)) / (max(Age) - min(Age)))
 
-head(dataset)
+head(balanced_dataset)
 
 # BloodPressure 
-dataset <- dataset %>%
+balanced_dataset <- balanced_dataset %>%
   mutate(Normalize_BloodPressure = (BloodPressure - min(BloodPressure))/(max(BloodPressure) - min(BloodPressure)))
 
-head(dataset)
+head(balanced_dataset)
 
 # Cholesterol
-dataset <- dataset %>%
+balanced_dataset <- balanced_dataset %>%
   mutate(Normalized_Cholesterol = (Cholesterol - min(Cholesterol))/(max(Cholesterol) - min(Cholesterol)))
 
-head(dataset)
+head(balanced_dataset)
 
 
 
 # Split Dataset
 set.seed(123)
-n <- nrow(dataset)
+n <- nrow(balanced_dataset)
 train_data <- sample(1:n, 0.7 * n)
 
-train <- dataset[train_data, ]
-test <- dataset[-train_data, ]
+train <- balanced_dataset[train_data, ]
+test <- balanced_dataset[-train_data, ]
 
 
 dim(train)
@@ -229,7 +238,7 @@ dim(test)
 
 
 #  Central Tendencies of Age by Gender
-dataset %>%
+balanced_dataset %>%
   group_by(Gender) %>%
   summarise(
     Mean_Age = mean(Age),
@@ -239,7 +248,7 @@ dataset %>%
 
 
 # Central Tendencies of Age by Heart_Rate
-dataset %>%
+balanced_dataset %>%
   group_by(Heart_Rate) %>%
   summarise(
     Mean_Age = mean(Age),
@@ -249,7 +258,7 @@ dataset %>%
 
 
 # Spread of Age by Gender
-dataset %>%
+balanced_dataset %>%
   group_by(Gender) %>%
   summarise(
     Range = max(Age) - min(Age),
