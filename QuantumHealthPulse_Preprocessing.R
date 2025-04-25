@@ -53,7 +53,6 @@ names(dataset)[potential_numeric]
 
 
 dataset$BloodPressure <- as.numeric(dataset$BloodPressure)
-
 dataset$Heart_Rate[dataset$Heart_Rate == "Low"] <- 0
 dataset$Heart_Rate[dataset$Heart_Rate == "High"] <- 1
 dataset$Heart_Rate[dataset$Heart_Rate == ""] <- NA
@@ -78,6 +77,8 @@ missing_barplot()
 
 
 head(dataset)
+
+
 
 # Outliers
 detect_outliers <- function(column_name) {
@@ -105,7 +106,7 @@ print(outlier_values)
 
 
 
-# Most Frequency for Gender
+# Most Frequency 
 impute_mode <- function(column_name) {
   mode_value <- names(sort(table(dataset[[column_name]]), decreasing = TRUE))[1]
   dataset[[column_name]][is.na(dataset[[column_name]])] <- mode_value
@@ -113,31 +114,26 @@ impute_mode <- function(column_name) {
 }
 
 
-
-# Instant discard for Heart Rate
+# Instant discard 
 discard_na <- function(column_name) {
   dataset <- dataset[!is.na(dataset[[column_name]]), ]
   return(dataset)
 }
 
-
-
-# Median for Age because have outlier
+# Median
 impute_median <- function(column_name) {
   median_value <- median(dataset[[column_name]], na.rm = TRUE)
   dataset[[column_name]][is.na(dataset[[column_name]])] <- median_value
   return(dataset)
 }
 
-
-# Mean for Blood Pressure 
+# Mean  
 impute_mean <- function(column_name) {
   dataset[[column_name]] <- as.numeric(dataset[[column_name]])  # ensure numeric
   mean_value <- mean(dataset[[column_name]], na.rm = TRUE)
   dataset[[column_name]][is.na(dataset[[column_name]])] <- mean_value
   return(dataset)
 }
-
 
 dataset <- impute_mode("Gender")
 dataset <- impute_median("Age")
@@ -149,6 +145,8 @@ dim(dataset)
 
 sum(is.na(dataset))
 
+
+
 unique_values <- unique(dataset$HeartDisease)
 print(unique_values)
 
@@ -159,10 +157,12 @@ print(value_counts)
 dataset %>% filter(!is.na(HeartDisease))
 
 
+
 # Duplicate
 sum(duplicated(dataset))  # Number of duplicate rows
 dataset <- dataset %>% distinct()
 dim(dataset)
+
 
 
 # Filter: Age should be between 0 and 120
@@ -170,19 +170,25 @@ dataset <- dataset %>% filter(Age >= 0 & Age <= 120)
 dim(dataset)
 
 
+
+
 # Balance dataset (simple undersampling)
+# Find the minority class count
+min_count <- dataset %>%
+  count(HeartDisease) %>%
+  summarise(min_n = min(n)) %>%
+  pull(min_n)
+
+# Apply undersampling properly
 balanced_dataset <- dataset %>%
   group_by(HeartDisease) %>%
-  sample_n(min(n())) %>%
+  slice_sample(n = min_count) %>%
   ungroup()
 
+# Confirm balance
 table(balanced_dataset$HeartDisease)
 
-cat("Before:\n")
-print(table(dataset$HeartDisease))
 
-cat("After:\n")
-print(table(balanced_dataset$HeartDisease))
 
 
 #  Normalize a Continuous Attribute
